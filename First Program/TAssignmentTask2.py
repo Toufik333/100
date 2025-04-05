@@ -6,9 +6,6 @@ import random
 points = []  # Will store (x, y, color_r, color_g, color_b, dx, dy)
 point_size = 7.0
 is_frozen = False
-is_blinking = False
-last_blink_time = 0
-blink_interval = 0.5  # Half a second for complete blink cycle
 base_speed = 1.0
 speed_multiplier = 1.0
 
@@ -62,7 +59,7 @@ def update_points():
             
 
 def showScreen():
-    global points, is_blinking, last_blink_time
+    global points
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()
