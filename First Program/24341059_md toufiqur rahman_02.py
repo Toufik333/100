@@ -158,10 +158,10 @@ def showScreen():
     global diamond_x, diamond_y, diamond_width, diamond_height, color, end_game,catcher_x, catcher_y, catcher_width, catcher_height
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-    glLoadIdentity() #load identity matrix
-    iterate() ##function call for viewport and projection matrix
-    glColor3f(1.0, 1.0, 0.0) #konokichur color set (RGB)
-    #call the draw methods here
+    glLoadIdentity()
+    iterate() 
+    glColor3f(1.0, 1.0, 0.0) 
+    
     glColor3f(0.82, 0.93, 0.53)
     if stopGame:
         DrawLine(-13, 265, 13, 275)
