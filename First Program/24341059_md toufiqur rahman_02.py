@@ -4,7 +4,7 @@ from OpenGL.GLU import *
 import random
 
 score = 0
-diamond_speed = 0.5
+diamond_speed = 0.8
 frameWidth=500
 frameHeight=700
 diamond_x = random.randint(-240, 240)
@@ -207,12 +207,11 @@ def new_game(over=False):
     catcher_x = 0
     if over:
         score=0
-    diamond_speed = 0.5
+    diamond_speed = 0.8
     color = (random.random(), random.random(), random.random())
     end_game= False
     stopGame = False
     if over:
-        print("over")
         end_game = True
 
 def keyboard_listener(key, x, y):
@@ -237,12 +236,12 @@ def new_diamond():
     global diamond_x, diamond_y, color ,diamond_speed
     diamond_x = random.randint(-240, 240)
     diamond_y = 200
-    diamond_speed += 0.05
+    diamond_speed += 0.1
     color = (random.random(), random.random(), random.random())  
     glutPostRedisplay()
     
 def mouse_listener(button, press, x, y):
-    global catcher_x, catcher_y, diamond_x, diamond_y, stopGame, score, end_game
+    global catcher_x, catcher_y, diamond_x, diamond_y, stopGame, score
     if button == GLUT_LEFT_BUTTON and press == GLUT_DOWN:
         
         mouse_x = x - frameWidth // 2
@@ -252,9 +251,9 @@ def mouse_listener(button, press, x, y):
         if -13 <= mouse_x <= 13 and 265 <= mouse_y <= 285:
             stopGame = not stopGame
             if stopGame:
-                print("pause")
+                print("Paused!")
             else:
-                print("resume")              
+                print("Resumed!")              
         #restarts
         elif -240 <= mouse_x <= -215 and 265 <= mouse_y <= 285:
             print("Starting Over!")
@@ -276,7 +275,7 @@ def animate():
             new_diamond()  
 
         elif diamond_y <= -305: 
-            print("Game Over! Final Score:", score)
+            print("GAME OVER..! \n Final Score:", score)
             end_game = True
             
             new_game(over=True)

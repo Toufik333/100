@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Web Page</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+        <div id="myHeader">
+            <ul class="nav">
+                <li class="home1"><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Products</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+
+    <div id="body">
+        <div id="profile">
+            <div id="profileimagediv">
+                <img id="profile_image" src="images/git.png" alt="dogeImage">
+            </div>
+            <div id="name">
+                <h1>Ahanaf Rivan</h1>
+                <ul>
+                    <li>From: Dinajpur, Bangladesh</li>
+                    <li>Age: 22</li>
+                    <li>Department of Computer Science</li>
+                    <li>BRAC University</li>
+                    <li>Mobile: 01700000000</li>
+                    <li>ahnafrivan@gmail.com</li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div id="rest">
+            <div class="sec1">
+                <h2>Hobbies</h2>
+                <ul>
+                    <li>Doodling</li>
+                    <li>Gaming</li>
+                    <li>Gardening</li>
+                </ul>
+            </div>
+            <hr>
+        
+            <div class="sec1">
+                <h2>Favorite Links</h2>
+                <ul>
+                    <li><a href="https://chat.openai.com/"><i>ChatGPT</i></a></li>
+                    <li><a href="https://www.notion.so/"><i>Note taking</i></a></li>
+                    <li><a href="https://developer.android.com/"><i>Learn Android</i></a></li>
+                    <li><a href=""><i>391 Discord Page</i></a></li>
+                    
+                </ul>
+            </div>
+            <hr>
+            <div class="sec1">
+                <h2>Favorite Quote</h2>
+                <q>"Life is what happens when you're busy making other plans."  </q><cite><a href="https://en.wikipedia.org/wiki/John_Lennon">- John Lennon</a></cite>
+            </div>
+            <br>
+        
+            <hr><!--  Horrizontal line -->
+            <section class="table">
+                <h2>Table</h2>
+                <table>
+                    <tr>
+                        <th>Place Name</th>
+                        <th>Distance</th>
+                        <th>Cost</th>
+                    </tr>
+                    <tr>
+                        <td>Dinajpur</td>
+                        <td>11</td>
+                        <td>3000</td>
+                    </tr>
+                    <tr>
+                        <td>Rangpur</td>
+                        <td>521</td>
+                        <td>9000</td>
+                    </tr>
+                    <tr>
+                        <td>Thakurgon</td>
+                        <td>122</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <td>Sylhet</td>
+                        <td>331</td>
+                        <td>3999</td>
+                    </tr>
+                    <tr>
+                        <td>Dhaka</td>
+                        <td>232</td>
+                        <td>1005</td>
+                    </tr>
+                    <tr>
+                        <td>Rajshahi</td>
+                        <td>341</td>
+                        <td>3654</td>
+                    </tr>
+                </table>
+            </section>
+        </div>
+
+        <div id="bodyimg">
+            <img  src="images/roof1.jpg" alt="Roofbacu">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrmMg_bpLnz7oALO68teWU3yQplrO8oDDcjA&s" alt="Roofbracu2">
+        </div>
+
+        <div class="sec1" id="paragraph">
+            <p>
+                Since its inception in 2001, <a href="https://www.bracu.ac.bd/">Brac University</a> has become one of the most reputed educational institution in Bangladesh. <br>
+                We have focused on generating new knowledge and promoting critical thinking amongst our students, <br>
+                graduating more than 7,000 young men and women during this time.
+            </p>
+        </div>
+            
+        
+    </div>
+    <div class="js">
+        <p class="p">H</p>
+        <p class="q">i</p>
+    </div>
+    
+
+    <script>
+        document.getElementsByClassName("p")[0].innerHTML = "Page Location: " + window.location.href;
+        document.getElementsByClassName("q")[0].innerHTML = "Last Modified: " + document.lastModified;
+    </script>
+
+</body>
+<footer>
+    <div id="linkContainer">
+        <a href="#"> <img class="linkimg" src="images/arrow-up.png" alt="Go Top"></a>
+        <a href="https://www.bracu.ac.bd"><img class="linkimg" src="https://www.bracu.ac.bd/sites/all/themes/sloth/logo.svg" alt="bracu"></a>
+        <a href="https://piazza.com/stonybrook/spring2019/cse391"><img class="linkimg" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Piazza_logo.png/1200px-Piazza_logo.png" alt="piazza"></a>
+        <a href="https://neal.fun"><img class="linkimg" src="https://neal.fun/general/logo.svg" alt="neal"></a>
+        <a href="https://colorhunt.co"><img class="linkimg" src="https://colorhunt.co/img/color-hunt-logo-animation.gif" alt="colorhumt"></a>
+    </div>
+    <div id="footer">
+        <p>© 2021 Md. Toufiqur Rahman</p>
+    </div>
+</footer>
+</html>

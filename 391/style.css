@@ -1,0 +1,256 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-image: url(images/bg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    color: rgb(7, 9, 11);
+    
+}
+
+
+
+
+div {  
+    margin-top: 20px;
+    
+    align-items: left;
+    justify-content: center;
+}
+ul{
+    color: rgba(48, 51, 53, 0.656);
+  
+    
+}
+h2{
+    background: linear-gradient(to right, rgba(110, 109, 109, 0.534), transparent);
+    width: 250px;
+    border: 20px;
+    margin-bottom: 0;
+    margin-top: 3px;
+    padding-left: 2%;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 5px;
+}
+h1{
+    text-transform: uppercase;
+}
+a {
+    color: rgb(94, 94, 222);
+    text-decoration: none;
+}
+a:hover {
+    color: rgb(14, 213, 94);
+}
+
+a:active {
+    color: red;
+}
+
+#profile_image {
+    border-radius: 50%;
+    width: 250px;
+    height: 250px;
+    margin: 0 auto;
+    border: 5px solid transparent;
+    box-shadow: 0 0 0 5px rgba(74, 73, 73, 0.2);
+}
+#profile{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px ;
+    text-align: left;
+    font-size: 20px;
+    margin-left: 20px;
+}
+#rest {
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(1px);
+    border-radius: 3%;
+    overflow: hidden;
+    padding: 15px;
+    margin-left: 2%;
+
+}
+ul.nav {
+    list-style:none;
+    height:55px;
+    line-height:55px;
+    background:#1f2624;
+    font-size:15px;
+    border-radius: 10px;
+    
+}
+ul.nav li {
+    border-left:1px solid #ffffffbf; 
+    float: right;
+    margin-left: auto;
+    
+}
+ul.nav a {
+    display:block;
+    padding:0 30px;
+    color:#ccece6;
+    text-decoration:none;
+}
+ul.nav a:hover,
+ul.nav li.current a {
+    background:#3b2f5b;
+}
+ul.nav li.home1{
+    float: left;
+    border: none;
+}
+.sec1{
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    margin-top: 0;
+    padding-left: 120px;
+}
+/* .sticky {
+    position: fixed;
+    top: 0;
+    width: 97%
+  } */
+#paragraph{
+    text-align: left;
+    margin: 0;
+}
+#bodyimg img{
+    display: inline-block;
+    width: auto;
+    height: 200px;
+    padding: 10px;
+    align-items: center;
+}
+#bodyimg{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+footer {
+    background-color: rgb(255, 255, 255);
+    color: rgb(8, 5, 5);
+    text-align: center;
+    padding: 10px;
+  }
+
+.linkimg{
+    
+    height: 40px;
+    width: auto;
+    padding: 10px;
+}
+#linkContainer{
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+}
+.table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+.js{
+    justify-content: left;
+    font-size: small;
+}
+@media(max-width: 768px) {
+    #myheader {
+        text-align: center;
+        padding: 10px;
+    }
+    body {
+        font-size: 14px;
+    }
+    #profile_image {
+        width: 200px;
+        height: 200px;
+    }
+    h2 {
+        width: 200px;
+        font-size: 18px;
+    }
+    ul.nav a {
+        padding: 0 20px;
+    }
+    
+    #rest {
+        margin-left: 2%;
+    }
+    h1 {
+        font-size: 24px;
+    }
+    .nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+}
+@media(max-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+    #name {
+        font-size: 18px;
+    }
+    #profile_image {
+        width: 100px;
+        height: 100px;
+    }
+    #myheader {
+        padding: 5px 0;
+        text-align: center;
+    }
+    h2 {
+        width: 150px;
+        font-size: 16px;
+    }
+    ul.nav a {
+        padding: 0 10px;
+    }
+    .sec1 {
+        padding-left: 20px;
+    }
+    #rest {
+        margin-left: 10px;
+    }
+    h1 {
+        font-size: 20px;
+    }
+    #bodyimg img {
+        width: 150px;
+        height: auto;
+    }
+    .nav {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+    }
+    footer{
+        font-size: 12px;
+        display: flex;
+    }
+
+
+
+
+
+}
