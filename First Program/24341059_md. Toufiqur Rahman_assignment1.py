@@ -1,4 +1,4 @@
-
+'''
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -204,12 +204,12 @@ glutTimerFunc(16, rain_animation, 0)  # Start animation timer
 
 glutMainLoop()
 
-
+'''
 
 #task2
 '''     ..............................................................................           '''
 
-'''
+
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -356,4 +356,3 @@ glutTimerFunc(16, timer, 0)  # Start animation timer
 
 glutMainLoop()
 
-'''
