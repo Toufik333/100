@@ -4,13 +4,14 @@ port = 5050
 format = 'utf-8'
 DATA = 16
 device_name = socket.gethostname()
+server_ip = socket.gethostbyname(device_name)
 client_ip = socket.gethostbyname(device_name)
 
 
-socket_address = (client_ip, port)
+server_socket_address = (server_ip, port)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(socket_address)
+client.connect(server_socket_address)
 
 
 def sending_message(msg):

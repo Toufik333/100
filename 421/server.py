@@ -28,12 +28,13 @@ while True:
         message = server_socket.recv(message_length).decode(format)
         
         if message == "disconnect":
-            connected = False
+            
             print("Client disconnected with", client_address)
+            connected = False
             #break
         
         print(f"Received message: {message}")
-        server_socket.send(b"Message received".encode(format))
+        server_socket.send("Message received".encode(format))
         
     server_socket.close()
         
