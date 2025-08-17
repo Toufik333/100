@@ -1,3 +1,4 @@
+import random
 from OpenGL.GL import *
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
@@ -5,7 +6,8 @@ import math
 
 # Camera-related variables
 camera_pos = (0,100,500) 
-
+bullets=[]
+bullet_radius =10
 fovY = 120  # Field of view
 GRID_LENGTH = 600  # Length of grid lines
 rand_var = 423
@@ -14,8 +16,11 @@ human_x = 0
 human_y = 0
 human_z = 0
 human_rotation = 0
-bulet_speed = 3
-first_person_camera = True  # Flag for first-person camera mode
+bullet_speed = 5
+first_person_camera = False  # Flag for first-person camera mode
+npc_max = 5
+npc_data = []
+
 
 def draw_text(x, y, text, font=GLUT_BITMAP_HELVETICA_18):
     glColor3f(1,1,1)
@@ -42,6 +47,55 @@ def draw_text(x, y, text, font=GLUT_BITMAP_HELVETICA_18):
     glPopMatrix()
     glMatrixMode(GL_MODELVIEW)
 
+
+
+def draw_bullet(bullet):
+    """
+    Draw a single bullet as a black sphere
+    """
+    glPushMatrix()
+    glColor3f(0, 0, 0)  # Black color
+    glTranslatef(bullet['pos'][0], bullet['pos'][1], bullet['pos'][2])
+    gluSphere(gluNewQuadric(), bullet['radius'], 10, 10)
+    glPopMatrix()
+
+def update_bullets():
+
+    global bullets
+    bullets_to_remove = []
+    
+    for i, bullet in enumerate(bullets):
+        # Update bullet position based on direction and speed
+        bullet['pos'][0] += bullet['dir'][0] * bullet_speed
+        bullet['pos'][1] += bullet['dir'][1] * bullet_speed
+        bullet['pos'][2] += bullet['dir'][2] * bullet_speed
+        
+        # Check collision with walls (considering bullet radius)
+        x, y, z = bullet['pos']
+        radius = bullet['radius']
+        
+        # Check if bullet hits any wall
+        if (x + radius >= GRID_LENGTH or x - radius <= -GRID_LENGTH or
+            y + radius >= GRID_LENGTH or y - radius <= -GRID_LENGTH or
+            z - radius <= 0 or z + radius >= 200):  # 200 is wall height
+            bullets_to_remove.append(i)
+    
+    # Remove bullets that hit walls (reverse order to maintain indices)
+    for i in reversed(bullets_to_remove):
+        bullets.pop(i)
+
+def draw_npc(x=0, y=0, z=0, rotation=0):
+    """
+    Draws an NPC as a red cuboid, same height as human but half the width.
+    """
+    glPushMatrix()
+    glColor3f(1, 0, 0)  # Red color
+    glTranslatef(x, y, z + 90)  # Elevate NPC above ground (half of human torso height)
+    glRotatef(rotation, 0, 0, 1)
+    # Human torso: width=200, height=50, depth=180 (scaled by 1/3)
+    # NPC: half width, same height/depth but not scaled
+    draw_rectangular_cuboid(100, 50, 180)
+    glPopMatrix()
 
 def draw_shapes():
 
@@ -229,11 +283,11 @@ def keyboardListener(key, x, y):
 
     # # Rotate gun left (A key)
     if key == b'a':
-        human_rotation -= 3  
+        human_rotation += 3  
 
     # # Rotate gun right (D key)
     if key == b'd':
-        human_rotation += 3
+        human_rotation -= 3
 
     # # Toggle cheat mode (C key)
     # if key == b'c':
@@ -271,33 +325,35 @@ def specialKeyListener(key, x, y):
         x += 3  # Small angle increment for smooth movement
 
     camera_pos = (x, y, z)
-bullets = []  # List to store bullet positions
 
 def mouseListener(button, state, x, y):
+    global bullet_radius
     """
     Handles mouse inputs for firing bullets (left click) and toggling camera mode (right click).
     """
     # # Left mouse button fires a bullet
     if button == GLUT_LEFT_BUTTON and state == GLUT_DOWN:
-        # Calculate bullet's starting position at the center of the head
-        head_radius = 50 / 3  # Because human is scaled by 1/3
-        bullet_x = human_x
-        bullet_y = human_y
-        bullet_z = human_z + (325 / 3)  # Head center z position
-
-        # Calculate bullet direction based on human_rotation
+        # Start bullet position from the middle of the torso, slightly in front
         angle_rad = math.radians(-human_rotation)
+        offset_distance = 30  # Distance in front of the character
+        
+        cyl_x = human_x + math.sin(angle_rad) * offset_distance
+        cyl_y = human_y + math.cos(angle_rad) * offset_distance
+        cyl_z = human_z + (200 / 3)  # Torso center z position
+
+        # Bullet direction based on human_rotation
         dir_x = math.sin(angle_rad)
         dir_y = math.cos(angle_rad)
         dir_z = 0  # Bullets move parallel to the ground
 
         # Store bullet as a dict with position, direction, and size
         bullets.append({
-            'pos': [bullet_x, bullet_y, bullet_z],
+            'pos': [cyl_x, cyl_y, cyl_z],
             'dir': [dir_x, dir_y, dir_z],
-            'radius': head_radius
+            'radius': bullet_radius
         })
-        
+        print(f"Bullet fired from ({cyl_x:.1f}, {cyl_y:.1f}, {cyl_z:.1f}) in direction ({dir_x:.2f}, {dir_y:.2f}, {dir_z:.2f})")
+        print(f"Total bullets: {len(bullets)}")
 
     # # Right mouse button toggles camera tracking mode
     # if button == GLUT_RIGHT_BUTTON and state == GLUT_DOWN:
@@ -345,8 +401,12 @@ def setupCamera():
 def idle():
     """
     Idle function that runs continuously:
+    - Updates bullet positions and removes bullets that hit walls
     - Triggers screen redraw for real-time updates.
     """
+    # Update bullet positions and handle collisions
+    update_bullets()
+    
     # Ensure the screen updates with the latest changes
     glutPostRedisplay()
 
@@ -357,6 +417,17 @@ def showScreen():
     - Clears the screen and sets up the camera.
     - Draws everything of the screen
     """
+    global npc_data, npc_max
+    
+    # Generate random NPCs if not already created
+    if not npc_data:
+        for _ in range(npc_max):
+            npc_x = random.randint(-GRID_LENGTH + 100, GRID_LENGTH - 100)  # Keep away from walls
+            npc_y = random.randint(-GRID_LENGTH + 100, GRID_LENGTH - 100)  # Keep away from walls
+            npc_z = 0  # Ground level
+            npc_rotation = random.randint(0, 360)
+            npc_data.append({'x': npc_x, 'y': npc_y, 'z': npc_z, 'rotation': npc_rotation})
+
     # Clear color and depth buffers
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glLoadIdentity()  # Reset modelview matrix
@@ -420,11 +491,21 @@ def showScreen():
     glPopMatrix()
 
     # Display game info text at a fixed screen position
-    draw_text(10, 770, f"A Random Fixed Position Text")
-    draw_text(10, 740, f"See how the position and variable change?: {rand_var}")
+    draw_text(10, 770, f"Assignment 3")
+    
+    
+    
 
     #draw_shapes()
     draw_human(human_x, human_y, human_z, human_rotation)  # Draw the human figure
+
+    # Draw all NPCs
+    for npc in npc_data:
+        draw_npc(npc['x'], npc['y'], npc['z'], npc['rotation'])
+
+    # Draw all bullets
+    for bullet in bullets:
+        draw_bullet(bullet)
 
     # Swap buffers for smooth rendering (double buffering)
     glutSwapBuffers()
