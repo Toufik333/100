@@ -4,7 +4,7 @@ from OpenGL.GLU import *
 import math
 
 # Camera-related variables
-camera_pos = (0,500,500)
+camera_pos = (0,100,500) 
 
 fovY = 120  # Field of view
 GRID_LENGTH = 600  # Length of grid lines
@@ -15,6 +15,7 @@ human_y = 0
 human_z = 0
 human_rotation = 0
 bulet_speed = 3
+first_person_camera = True  # Flag for first-person camera mode
 
 def draw_text(x, y, text, font=GLUT_BITMAP_HELVETICA_18):
     glColor3f(1,1,1)
@@ -196,7 +197,7 @@ def keyboardListener(key, x, y):
     """
     Handles keyboard inputs for player movement, gun rotation, camera updates, and cheat mode toggles.
     """
-    global human_x, human_y, human_z, human_rotation
+    global human_x, human_y, human_z, human_rotation,first_person_camera
     # # Move forward (W key)
     if key == b'w': 
         human_y +=3 * math.cos(math.radians(-human_rotation))
@@ -238,7 +239,8 @@ def keyboardListener(key, x, y):
     # if key == b'c':
 
     # # Toggle cheat vision (V key)
-    # if key == b'v':
+    if key == b'v':
+        first_person_camera = not first_person_camera
 
     # # Reset the game if R key is pressed
     # if key == b'r':
@@ -302,6 +304,7 @@ def mouseListener(button, state, x, y):
 
 
 def setupCamera():
+    global first_person_camera, camera_pos, fovY
     """
     Configures the camera's projection and view settings.
     Uses a perspective projection and positions the camera to look at the target.
@@ -314,11 +317,29 @@ def setupCamera():
     glLoadIdentity()  # Reset the model-view matrix
 
     # Extract camera position and look-at target
-    x, y, z = camera_pos
+    if first_person_camera:
+        # First-person camera mode: position just outside the human's head and look in the direction the human is facing
+        head_radius = 50 / 3  # Scaled head radius
+        x = human_x + math.sin(math.radians(-human_rotation)) * (head_radius + 5)
+        y = human_y + math.cos(math.radians(-human_rotation)) * (head_radius + 5)
+        z = human_z + (325 / 3)  # Head center z position
+
+        # Calculate look-at target based on human_rotation
+        angle_rad = math.radians(-human_rotation)
+        look_x = x + math.sin(angle_rad) * 50
+        look_y = y + math.cos(angle_rad) * 50
+        look_z = z   # Keep the same height
+
+        gluLookAt(x, y, z,  # Camera position (just outside the head)
+                  look_x, look_y, look_z,  # Look-at target (in front of human)
+                  0, 0, 1)  # Up vector (z-axis)
+    else:
+        # Default camera position
+        x, y, z = camera_pos
     # Position the camera and set its orientation
-    gluLookAt(x, y, z,  # Camera position
-              0, 0, 0,  # Look-at target
-              0, 0, 1)  # Up vector (z-axis)
+        gluLookAt(x, y, z,  # Camera position
+                0, 0, 0,  # Look-at target
+                0, 0, 1)  # Up vector (z-axis)
 
 
 def idle():
